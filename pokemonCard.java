@@ -9,9 +9,9 @@ public class pokemonCard
 {
     // fields
     private String name;
-    private String number;
+    private double value;
     private String image;
-    static final String DEFAULT_IMAGE = "profile.png";
+    static final String DEFAULT_IMAGE = "pokemon.jpg";
     final int LOC_X = 100;
     final int LOC_Y = 100;
     final double WIDTH = 100;
@@ -21,10 +21,10 @@ public class pokemonCard
     /**
      * Constructor for objects of class pokemonCard
      */
-    public pokemonCard(String nm, String num, String img)
+    public pokemonCard(String nm, double val, String img)
     {
         name = nm;
-        number = num;
+        value = val;
         if (img == null) {
             this.image = DEFAULT_IMAGE;
         }else{
@@ -36,14 +36,13 @@ public class pokemonCard
      * Contructor overloading
      * Set default image to obj
      */
-    public pokemonCard(String nm, String num){
-        this(nm, num, DEFAULT_IMAGE);
+    public pokemonCard(String nm, double val){
+        this(nm, val, DEFAULT_IMAGE);
     }
     /**
      * Display profile on GUI
      */
     public void displayProfile(){
-                
         UI.drawImage(this.image, LOC_X, LOC_Y, WIDTH, HEIGHT);
     }
 
@@ -54,10 +53,10 @@ public class pokemonCard
         return this.name;
     }
     /**
-     * Getter for number
+     * Getter for value
      */
-    public String getNumber() {
-        return this.number;
+    public double getValue() {
+        return this.value;
     }
     /**
      * Mouse on profile
