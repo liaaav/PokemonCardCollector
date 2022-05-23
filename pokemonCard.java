@@ -12,10 +12,10 @@ public class pokemonCard
     private double value;
     private String image;
     static final String DEFAULT_IMAGE = "pokemon.jpg";
-    final int LOC_X = 100;
-    final int LOC_Y = 100;
+    final int LOC_X = 10;
+    final int LOC_Y = 10;
     final double WIDTH = 100;
-    final double HEIGHT = 100;
+    final double HEIGHT = 150;
 
 
     /**
@@ -40,10 +40,10 @@ public class pokemonCard
         this(nm, val, DEFAULT_IMAGE);
     }
     /**
-     * Display profile on GUI
+     * Display image on GUI
      */
-    public void displayProfile(){
-        UI.drawImage(this.image, LOC_X, LOC_Y, WIDTH, HEIGHT);
+    public void displayImage(int locX, int locY){
+        UI.drawImage(this.image, locX, locY, WIDTH, HEIGHT);
     }
 
     /**
