@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import ecs100.*;
+
 /**
  * code of GUI
  *
@@ -18,7 +20,7 @@ public class GUI
     public GUI()
     {
         // initialise instance variables
-        collection = new Collection();       //instantiate the books object
+        collection = new Collection();       //instantiate the collection
         UI.initialise();
         UI.addButton("Print All", collection::printAll);
         UI.addButton("Add", this::addPokemonCard);
@@ -32,15 +34,23 @@ public class GUI
      * Add a pokemon card to collection
      */
     public void addPokemonCard(){
-        final int INCREMENT = 1;
-        UI.clearText();
-        String name = UI.askString("Name: ").toLowerCase();
+        clear();
+        String name;
+        do{
+            name = UI.askString("Name: ").toLowerCase();
+        }while(this.isEmpty(name) == true);
+        
         double value = UI.askDouble("Value: $");
         
         // add a book image for display in the GUI
         String imgFileName = UIFileChooser.open("Choose Image File: ");
         collection.setPokemonCardId(); // Increment the ID by one
-        collection.addPokemonCard(name, value, imgFileName); 
+        collection.addPokemonCard(name, value, imgFileName);
+        
+        clear();
+        UI.println(name + " added");
+        displayPokemon();   //displays just added pokemon
+        
     }
     
     /**
@@ -55,6 +65,18 @@ public class GUI
             return false;
         }
     }
+    
+    /**
+     * check if string is empty
+     */
+    public static boolean isEmpty(String string){
+        if(string != null && !string.trim().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
     /**
      * Finds book based on name
      * Prints out the author and qty if found
@@ -62,18 +84,23 @@ public class GUI
     public void findPokemonCard(){
         String pokemonCardName = UI.askString("Enter name of Pokemon");
         if (collection.findPokemonCard(pokemonCardName.toLowerCase())){
-            UI.clearText();
-            UI.clearGraphics();
+            clear();
             UI.println("Found Pokemon!");
-            pokemonCard = collection.getPokemonCard();
-            UI.println("Name: " + pokemonCard.getName());
-            UI.println("Value: $" + pokemonCard.getValue());
-            pokemonCard.displayProfile();  //Show profile on canvas
+            displayPokemon();
         }else{
             UI.println("Card not found :C");
         };
     }
     
+    /**
+     * Display pokemon information
+     */
+    public void displayPokemon(){
+        pokemonCard = collection.getPokemonCard();
+        UI.println("Name: " + pokemonCard.getName());
+        UI.println("Value: $" + pokemonCard.getValue());
+        pokemonCard.displayImage(10, 10);  //Show image on canvas
+    }
     /**
      * manages mouse
      */
@@ -96,4 +123,6 @@ public class GUI
         UI.clearText();
         UI.clearGraphics();
     }
+    
+    
 }
