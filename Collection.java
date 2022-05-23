@@ -37,14 +37,14 @@ public class Collection
      */
     public void setPokemonCardId(){
         this.currPokemonCardId += 1;
-    }
+    }  
     
     /**
      * Add a pokemon Card to the map
      */
     public void addPokemonCard(String name, double val, String img) {
-        
         Collection.put(currPokemonCardId, new pokemonCard(name, val, img));
+        currPokemonCard = Collection.get(currPokemonCardId);
     }
     
     /** 
@@ -76,10 +76,28 @@ public class Collection
     public void printAll(){
         // Traverse Map
         UI.clearText();
+        UI.clearGraphics();
+        
         for (int pokemonCardId : Collection.keySet()){
             UI.println(pokemonCardId+") " + Collection.get(pokemonCardId).getName());
             UI.println("Value: $ " + Collection.get(pokemonCardId).getValue());
         }
+        // print all pokemon card images
+        this:displayAll();
     }
-    
-}
+    /**
+     * Display image with set location
+     */
+    public void displayAll (){
+        int locY = 10;
+        int locX = 10;
+        // int i = 1;
+        // int row = 5;
+        // int size = Collection.size();
+        for (int pokemonCardId : Collection.keySet()){
+                currPokemonCard = Collection.get(pokemonCardId);
+                currPokemonCard.displayImage(locX, locY);
+                locX += currPokemonCard.WIDTH;    // moves next image over by 150;
+            }
+        }
+        }
