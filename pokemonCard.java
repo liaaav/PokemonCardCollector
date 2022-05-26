@@ -43,7 +43,9 @@ public class pokemonCard
     /**
      * Display image on GUI
      */
-    public void displayImage(int locX, int locY){
+    public void displayImage(int x, int y){
+        locX = x;
+        locY = y;
         UI.drawImage(this.image, locX, locY, WIDTH, HEIGHT);
     }
 
