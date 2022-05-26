@@ -37,6 +37,7 @@ public class GUI
     public void addPokemonCard(){
         clear();
         String name;
+        double value;
         do{
             name = UI.askString("Name: ").toUpperCase();
             if(this.isEmpty(name) == true){
@@ -44,7 +45,12 @@ public class GUI
             }
         }while(this.isEmpty(name) == true); // checks name is not empty
         
-        double value = UI.askDouble("Value: $");
+        do{
+            value = UI.askDouble("Value: $");
+            if(this.isNegative(value) == true){
+                UI.println("Please enter a value above 0");
+            }
+        }while(this.isNegative(value) == true); // checks if value is negative or 0
         
         // add a image for display in the GUI
         String imgFileName = UIFileChooser.open("Choose Image File: ");
@@ -57,7 +63,16 @@ public class GUI
         
     }
     
-    
+    /**
+     * Check if value is negative or 0
+     */
+    public static boolean isNegative(double val){
+        if(val <= 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Check if string is empty
      */
