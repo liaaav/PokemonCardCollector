@@ -95,9 +95,23 @@ public class Collection
         int locX = 20;  // x location of first card
         int buffer = 10;    // gap inbetween cards
         for (int pokemonCardId : Collection.keySet()){
-                currPokemonCard = Collection.get(pokemonCardId);
-                currPokemonCard.displayImage(locX, locY);
-                locX += currPokemonCard.WIDTH + buffer;    // moves next image over with a buffer inbetween;
+            currPokemonCard = Collection.get(pokemonCardId);
+            currPokemonCard.displayImage(locX, locY);
+            locX += currPokemonCard.WIDTH + buffer;    // moves next image over with a buffer inbetween;
+        }
+        }
+    
+    /**
+     * Defines which profile mouse clicks on
+     */
+    public boolean imageClick (double x, double y){
+        for (int pokemonCardId : Collection.keySet()){
+            currPokemonCard = Collection.get(pokemonCardId);
+            // checks if click was on the image
+            if (currPokemonCard.onProfile(x,y)){    
+                return true;
             }
         }
-        }
+        return false;
+    }
+}
