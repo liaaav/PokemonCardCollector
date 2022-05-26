@@ -4,14 +4,13 @@ import ecs100.*;
  * Collection of pokemon cards
  *
  * @author AL
- * @version 20/05/22
+ * @version 26/05/22
  */
 public class Collection
 {
-    // instance variables - replace the example below with your own
     private HashMap<Integer, pokemonCard> Collection;     //declaring the hashmap
-    private int currPokemonCardId;                     // store the current if of pokemonCard being added
-    private pokemonCard currPokemonCard;                      // store the instance of the current pokemonCard
+    private int currPokemonCardId;                        // store the id of current pokemonCard
+    private pokemonCard currPokemonCard;                  // store the instance of the current pokemonCard
     /**
      * Constructor for objects of class Collection
      */
@@ -21,15 +20,15 @@ public class Collection
         Collection = new HashMap<Integer, pokemonCard>();
         
         // create Collection
-        pokemonCard p1 = new pokemonCard("wooper", 0.34, "wooper.png");
-        pokemonCard p2 = new pokemonCard("wooper", 7.45);
-        pokemonCard p3 = new pokemonCard("galarian ponyta", 7.76);
+        pokemonCard p1 = new pokemonCard("WOOPER", 0.34, "wooper.png");
+        pokemonCard p2 = new pokemonCard("WOOPER", 7.45, "shinyWooper.png");
+        pokemonCard p3 = new pokemonCard("GALARIAN PONYTA", 7.76, "galarianPonyta.png");
         
         Collection.put(1, p1);
         Collection.put(2, p2);
         Collection.put(3, p3);
         
-        this.currPokemonCardId = 3;     //Stores the current pokemonCard id
+        this.currPokemonCardId = 3;     //Stores the current id
     }
 
     /**
@@ -43,8 +42,9 @@ public class Collection
      * Add a pokemon Card to the map
      */
     public void addPokemonCard(String name, double val, String img) {
-        Collection.put(currPokemonCardId, new pokemonCard(name, val, img));
-        currPokemonCard = Collection.get(currPokemonCardId);
+        double value = Math.round(val*100.0)/100.0;     // rounds value to 2dp
+        Collection.put(currPokemonCardId, new pokemonCard(name, value, img));
+        currPokemonCard = Collection.get(currPokemonCardId);    // sets current pokemon card to the one just added
     }
     
     /** 
@@ -71,16 +71,18 @@ public class Collection
     }
     
     /**
-     * Print detail of all pokemonCard
+     * Print detail of all pokemon cards
      */
     public void printAll(){
-        // Traverse Map
+        // clears graphics and text
         UI.clearText();
         UI.clearGraphics();
-        
+        UI.println("----Pokemon----");
+        // Traverse Map
         for (int pokemonCardId : Collection.keySet()){
             UI.println(pokemonCardId+") " + Collection.get(pokemonCardId).getName());
             UI.println("Value: $ " + Collection.get(pokemonCardId).getValue());
+            UI.println("");
         }
         // print all pokemon card images
         this:displayAll();
@@ -89,15 +91,13 @@ public class Collection
      * Display image with set location
      */
     public void displayAll (){
-        int locY = 10;
-        int locX = 10;
-        // int i = 1;
-        // int row = 5;
-        // int size = Collection.size();
+        int locY = 20;  // y location
+        int locX = 20;  // x location of first card
+        int buffer = 10;    // gap inbetween cards
         for (int pokemonCardId : Collection.keySet()){
                 currPokemonCard = Collection.get(pokemonCardId);
                 currPokemonCard.displayImage(locX, locY);
-                locX += currPokemonCard.WIDTH;    // moves next image over by 150;
+                locX += currPokemonCard.WIDTH + buffer;    // moves next image over with a buffer inbetween;
             }
         }
         }
