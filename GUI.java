@@ -23,14 +23,19 @@ public class GUI
         collection = new Collection();       //instantiate the collection
         UI.initialise();
         // buttons
-        UI.addButton("Print All", collection::printAll);
+        UI.addButton("Print All", this::printAll);
         UI.addButton("Add", this::addPokemonCard);
         UI.addButton("Find", this::findPokemonCard);
         UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
-        UI.setMouseListener(this::mouse);
     }
-    
+    /**
+     * 
+     */
+    public void printAll(){
+        collection.printAll();
+        UI.setMouseListener(this::printAllMouse);   // sets mouse listener
+    }
     /**
      * Add a pokemon card to collection
      */
@@ -114,21 +119,29 @@ public class GUI
         UI.println("Name: " + pokemonCard.getName());
         UI.println("Value: $" + pokemonCard.getValue());
         pokemonCard.displayImage(20, 20);  //Show image on canvas
+        UI.setMouseListener(this::pokemonMouse);    // sets mouse listener
     }
     /**
-     * manages mouse
+     * mouse settings when all pokemon are displayed
      */
-    public void mouse(String action, double x, double y){
+    public void printAllMouse(String action, double x, double y){
         if (action.equals("released")){
-            if (pokemonCard==null) {
-                return;
-            }
-            if (pokemonCard.onProfile(x,y)){
+            if(collection.imageClick(x,y) == true){
                 clear();
+                displayPokemon();   // if image is pressed on, details of pokemon are displayed
+            };
+        }
+    }
+    /**
+     * mouse settings when 1 pokemon details are displayed
+     */
+    public void pokemonMouse(String action, double x, double y){
+         if (action.equals("released")){
+            if (pokemonCard.onProfile(x,y)){
+                clear();    // if image is pressed on, details are cleared
             }
         }
     }
-    
     /**
      * clear all
      */
