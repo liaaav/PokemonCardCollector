@@ -3,19 +3,19 @@ import ecs100.*;
  * Support class for pokemonCards
  *
  * @author AL
- * @version 20/05/22
+ * @version 26/05/22
  */
 public class pokemonCard
 {
     // fields
-    private String name;
-    private double value;
-    private String image;
+    private String name;        // pokemon name
+    private double value;       // momentary value
+    private String image;       // image file name
     static final String DEFAULT_IMAGE = "pokemon.jpg";
-    final int LOC_X = 10;
-    final int LOC_Y = 10;
-    final double WIDTH = 100;
-    final double HEIGHT = 150;
+    private int locX;       // x location of image
+    private int locY;       // y location of image
+    final double WIDTH = 100;   // width of image
+    final double HEIGHT = 150;  //height of image
 
 
     /**
@@ -39,6 +39,7 @@ public class pokemonCard
     public pokemonCard(String nm, double val){
         this(nm, val, DEFAULT_IMAGE);
     }
+    
     /**
      * Display image on GUI
      */
@@ -59,12 +60,12 @@ public class pokemonCard
         return this.value;
     }
     /**
-     * Mouse on profile
+     * Detects if mouse is on the image
      */
     public boolean onProfile(double x, double y){
         // an easy approximation is to pretend it is the enclosing rectangle.
         // It is nicer to do a little bit of geometry and get it right
-        if ((x >= LOC_X) && (x<= LOC_X+WIDTH) && (y >= LOC_Y) && (y<= LOC_Y+HEIGHT)){
+        if ((x >= locX) && (x<= locX+WIDTH) && (y >= locY) && (y<= locY+HEIGHT)){
             return true;
         }else{
             return false;
