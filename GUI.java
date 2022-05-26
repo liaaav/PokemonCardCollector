@@ -4,14 +4,14 @@ import ecs100.*;
 /**
  * code of GUI
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author AL
+ * @version 26/05/22
  */
 public class GUI
 {
     // instance variables
-    private Collection collection;        // declare Collection instance
-    private pokemonCard pokemonCard;          // declare pokemonCard sinstance
+    private Collection collection;          // declare Collection instance
+    private pokemonCard pokemonCard;          // declare pokemonCard instance
 
 
     /**
@@ -22,10 +22,11 @@ public class GUI
         // initialise instance variables
         collection = new Collection();       //instantiate the collection
         UI.initialise();
+        // buttons
         UI.addButton("Print All", collection::printAll);
         UI.addButton("Add", this::addPokemonCard);
         UI.addButton("Find", this::findPokemonCard);
-        UI.addButton("Hide Details", this::clear);
+        UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
         UI.setMouseListener(this::mouse);
     }
@@ -37,12 +38,15 @@ public class GUI
         clear();
         String name;
         do{
-            name = UI.askString("Name: ").toLowerCase();
-        }while(this.isEmpty(name) == true);
+            name = UI.askString("Name: ").toUpperCase();
+            if(this.isEmpty(name) == true){
+                UI.println("Please enter a pokemon name");
+            }
+        }while(this.isEmpty(name) == true); // checks name is not empty
         
         double value = UI.askDouble("Value: $");
         
-        // add a book image for display in the GUI
+        // add a image for display in the GUI
         String imgFileName = UIFileChooser.open("Choose Image File: ");
         collection.setPokemonCardId(); // Increment the ID by one
         collection.addPokemonCard(name, value, imgFileName);
@@ -53,21 +57,9 @@ public class GUI
         
     }
     
-    /**
-     * Checks if string is numeric
-     */
-    public static boolean isNumeric(String string){
-        try{
-            Integer.parseInt(string);
-            return true;
-        }catch (NumberFormatException e){
-            UI.println("Please enter a number");
-            return false;
-        }
-    }
     
     /**
-     * check if string is empty
+     * Check if string is empty
      */
     public static boolean isEmpty(String string){
         if(string != null && !string.trim().isEmpty()){
@@ -78,12 +70,19 @@ public class GUI
     }
     
     /**
-     * Finds book based on name
-     * Prints out the author and qty if found
+     * Finds pokemon based on name
+     * Prints pokemon details if found
      */
     public void findPokemonCard(){
-        String pokemonCardName = UI.askString("Enter name of Pokemon");
-        if (collection.findPokemonCard(pokemonCardName.toLowerCase())){
+        String name;
+        do{
+            name = UI.askString("Enter name of Pokemon");
+            if(this.isEmpty(name) == true){
+                UI.println("Please enter a pokemon name");
+            }
+        }while(this.isEmpty(name) == true); // checks name is not empty
+        
+        if (collection.findPokemonCard(name.toLowerCase())){
             clear();
             UI.println("Found Pokemon!");
             displayPokemon();
@@ -99,7 +98,7 @@ public class GUI
         pokemonCard = collection.getPokemonCard();
         UI.println("Name: " + pokemonCard.getName());
         UI.println("Value: $" + pokemonCard.getValue());
-        pokemonCard.displayImage(10, 10);  //Show image on canvas
+        pokemonCard.displayImage(20, 20);  //Show image on canvas
     }
     /**
      * manages mouse
@@ -107,7 +106,6 @@ public class GUI
     public void mouse(String action, double x, double y){
         if (action.equals("released")){
             if (pokemonCard==null) {
-                UI.printMessage("Create some Collection");
                 return;
             }
             if (pokemonCard.onProfile(x,y)){
