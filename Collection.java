@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import ecs100.*;
+import java.util.ArrayList;
 /**
  * Collection of pokemon cards
  *
@@ -32,12 +33,18 @@ public class Collection
     }
 
     /**
-     * Set pokemon Card Id
+     * increases id by one
      */
-    public void setPokemonCardId(){
+    public void idIncrement(){
         this.currPokemonCardId += 1;
     }  
     
+    /**
+     * Sets current pokemon based on id passed in
+     */
+    public void setPokemonCardId(int id){
+        currPokemonCard = Collection.get(id);
+    }
     /**
      * Add a pokemon Card to the map
      */
@@ -59,15 +66,16 @@ public class Collection
      * Sets the current pokemonCard instance if found
      * @return boolean false if not found
      */
-    public boolean findPokemonCard(String name){
+    public ArrayList findPokemonCard(String name){
         // Search for pokemonCard
+        ArrayList<Integer> searchResult = new ArrayList<Integer>(); 
         for (int pokemonCardId: Collection.keySet()){
             if (Collection.get(pokemonCardId).getName().toLowerCase().contains(name)){
                 currPokemonCard = Collection.get(pokemonCardId);
-                return true;
+                searchResult.add(pokemonCardId);
             }
         }
-        return false;
+        return searchResult;
     }
     
     /**
@@ -99,7 +107,7 @@ public class Collection
             currPokemonCard.displayImage(locX, locY);
             locX += currPokemonCard.WIDTH + buffer;    // moves next image over with a buffer inbetween;
         }
-        }
+    }
     
     /**
      * Defines which profile mouse clicks on
