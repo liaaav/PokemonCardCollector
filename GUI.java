@@ -1,6 +1,6 @@
 import java.util.HashMap;
 import ecs100.*;
-
+import java.util.ArrayList;
 /**
  * code of GUI
  *
@@ -26,6 +26,7 @@ public class GUI
         UI.addButton("Print All", this::printAll);
         UI.addButton("Add", this::addPokemonCard);
         UI.addButton("Find", this::findPokemonCard);
+        // UI.addButton("Delete Card", this::detelePokemonCard);
         UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
     }
@@ -59,7 +60,7 @@ public class GUI
         
         // add a image for display in the GUI
         String imgFileName = UIFileChooser.open("Choose Image File: ");
-        collection.setPokemonCardId(); // Increment the ID by one
+        collection.idIncrement(); // Increcment the ID by one
         collection.addPokemonCard(name, value, imgFileName);
         
         clear();
@@ -94,6 +95,7 @@ public class GUI
      * Prints pokemon details if found
      */
     public void findPokemonCard(){
+        clear();
         String name;
         do{
             name = UI.askString("Enter name of Pokemon");
@@ -102,15 +104,51 @@ public class GUI
             }
         }while(this.isEmpty(name) == true); // checks name is not empty
         
-        if (collection.findPokemonCard(name.toLowerCase())){
+        ArrayList<Integer> searchResult = collection.findPokemonCard(name);
+        if(searchResult.size()< 1){
+            UI.println("Card not found :C");
+        }else if(searchResult.size() == 1){
+            int id = searchResult.get(0);   // sets id to the only one in the search array
+            collection.setPokemonCardId(id);
+            pokemonCard = collection.getPokemonCard();
             clear();
             UI.println("Found Pokemon!");
             displayPokemon();
-        }else{
-            UI.println("Card not found :C");
-        };
+        }
+        else{
+            clear();
+            UI.println("Click on the card to see details!");
+            UI.setMouseListener(this::printAllMouse);   // sets mouse listener
+            int locY = 20;  // y location
+            int locX = 20;  // x location of first card
+            int buffer = 10;    // gap inbetween cards
+            int numberBullet = 1;   // number bullet point
+            for (int  i = 0; i < searchResult.size(); i++){ // cycles through search results
+                 int id = searchResult.get(i);      // sets id to the only one in the search array
+                 collection.setPokemonCardId(id);
+                 pokemonCard = collection.getPokemonCard();
+                 UI.println(numberBullet+") " + pokemonCard.getName());
+                 numberBullet++;        // increment number
+                 UI.println("");
+                 pokemonCard.displayImage(locX, locY);
+                 locX += pokemonCard.WIDTH + buffer;    // moves next image over with a buffer inbetween
+            } 
+        }
     }
     
+    /**
+     * Delete pokemon card
+     */
+    public void deletePokemonCard(){
+        String name;
+        do{
+            name = UI.askString("Enter name of Pokemon");
+            if(this.isEmpty(name) == true){
+                UI.println("Please enter a pokemon name");
+            }
+        }while(this.isEmpty(name) == true); // checks name is not empty
+        
+    }
     /**
      * Display pokemon information
      */
