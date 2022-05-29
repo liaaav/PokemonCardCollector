@@ -61,6 +61,7 @@ public class pokemonCard
     public double getValue() {
         return this.value;
     }
+    
     /**
      * Detects if mouse is on the image
      */
