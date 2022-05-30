@@ -26,7 +26,7 @@ public class GUI
         UI.addButton("Print All", this::printAll);
         UI.addButton("Add", this::addPokemonCard);
         UI.addButton("Find", this::findPokemonCard);
-        // UI.addButton("Delete Card", this::detelePokemonCard);
+        UI.addButton("Delete Card", this::deletePokemonCard);
         UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
     }
@@ -35,6 +35,7 @@ public class GUI
      */
     public void printAll(){
         collection.printAll();
+        collection.displayAll();
         UI.setMouseListener(this::printAllMouse);   // sets mouse listener
     }
     /**
@@ -92,7 +93,8 @@ public class GUI
     
     /**
      * Finds pokemon based on name
-     * Prints pokemon details if found
+     * Prints pokemon details if 1 is found
+     * if multiple are found, creates an array list of pokemon
      */
     public void findPokemonCard(){
         clear();
@@ -140,13 +142,26 @@ public class GUI
      * Delete pokemon card
      */
     public void deletePokemonCard(){
-        String name;
+        collection.printAll();
+        int id;
         do{
-            name = UI.askString("Enter name of Pokemon");
-            if(this.isEmpty(name) == true){
-                UI.println("Please enter a pokemon name");
+            id = UI.askInt("Enter id of the Pokemon \nyou wish to delete: ");
+            if(id > collection.getSize() || id < 1){
+                UI.println("Please enter a valid id");
             }
-        }while(this.isEmpty(name) == true); // checks name is not empty
+        }while (id > collection.getSize() || id < 1);
+        String confirmation;
+        
+        do{
+            confirmation = UI.askString("Are you sure? (y/n)\n").toLowerCase();
+            if (confirmation.equals("y")){
+                collection.deletePokemonCard(id);
+                UI.println("Pokemon deleted");
+                collection.printAll();      // prints updated collection
+            }else{
+                UI.println("Please enter y or n");
+            }
+        }while (!confirmation.equals("y") && !confirmation.equals("n"));
         
     }
     /**
