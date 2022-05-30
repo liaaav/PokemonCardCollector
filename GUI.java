@@ -24,8 +24,8 @@ public class GUI
         UI.initialise();
         // buttons
         UI.addButton("Print All", this::printAll);
-        UI.addButton("Add", this::addPokemonCard);
-        UI.addButton("Find", this::findPokemonCard);
+        UI.addButton("Add Card", this::addPokemonCard);
+        UI.addButton("Find Card", this::findPokemonCard);
         UI.addButton("Delete Card", this::deletePokemonCard);
         UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
