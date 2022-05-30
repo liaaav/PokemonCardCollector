@@ -53,7 +53,19 @@ public class Collection
         Collection.put(currPokemonCardId, new pokemonCard(name, value, img));
         currPokemonCard = Collection.get(currPokemonCardId);    // sets current pokemon card to the one just added
     }
-    
+    /**
+     * Size of collection getter
+     */
+    public int getSize(){
+        int size = Collection.size();
+        return size;
+    }
+    /**
+     * delete pokemon card
+     */
+    public void deletePokemonCard(int id){
+        Collection.remove(id);
+    }
     /** 
      * Getter for the current pokemonCard instance
      */
@@ -92,8 +104,6 @@ public class Collection
             UI.println("Value: $ " + Collection.get(pokemonCardId).getValue());
             UI.println("");
         }
-        // print all pokemon card images
-        this:displayAll();
     }
     /**
      * Display image with set location
