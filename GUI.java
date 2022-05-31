@@ -11,9 +11,7 @@ public class GUI
 {
     // instance variables
     private Collection collection;          // declare Collection instance
-    private pokemonCard pokemonCard;          // declare pokemonCard instance
-
-
+    private PokemonCard pokemonCard;          // declare pokemonCard instance
     /**
      * Constructor for objects of class GUI
      */
