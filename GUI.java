@@ -28,14 +28,16 @@ public class GUI
         UI.addButton("Clear", this::clear);
         UI.addButton("Quit", UI::quit);
     }
+    
     /**
-     * 
+     * prints all pokemon cards
      */
     public void printAll(){
         collection.printAll();
         collection.displayAll();
         UI.setMouseListener(this::printAllMouse);   // sets mouse listener
     }
+    
     /**
      * Add a pokemon card to collection
      */
