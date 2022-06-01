@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Collection
 {
     //declaring the hashmap
-    private HashMap<Integer, PokemonCard> Collection;
+    private HashMap<Integer, PokemonCard> collection;
     // store the id of current pokemonCard
     private int currPokemonCardId;
     // store the instance of the current pokemonCard
@@ -21,7 +21,7 @@ public class Collection
     public Collection()
     {
         // initialise instance variables
-        Collection = new HashMap<Integer, PokemonCard>();
+        collection = new HashMap<Integer, PokemonCard>();
         
         // create Collection
         PokemonCard p1 = new PokemonCard("WOOPER", 0.34, "wooper.png");
@@ -29,9 +29,9 @@ public class Collection
         PokemonCard p3 = new PokemonCard
         ("GALARIAN PONYTA", 7.76, "galarianPonyta.png");
         
-        Collection.put(1, p1);
-        Collection.put(2, p2);
-        Collection.put(3, p3);
+        collection.put(1, p1);
+        collection.put(2, p2);
+        collection.put(3, p3);
         
         this.currPokemonCardId = 3;     //Stores the current id
     }
@@ -48,7 +48,7 @@ public class Collection
      * @param id hashmap id of the pokemon card
      */
     public void setPokemonCardId(int id) {
-        currPokemonCard = Collection.get(id);
+        currPokemonCard = collection.get(id);
     }
     
     /**
@@ -61,16 +61,16 @@ public class Collection
         // rounds value to 2dp
         double value = Math.round(val * 100.0) / 100.0;
         // puts card into hashmap
-        Collection.put(currPokemonCardId, new PokemonCard(name, value, img));
+        collection.put(currPokemonCardId, new PokemonCard(name, value, img));
         // sets current pokemon card to the one just added
-        currPokemonCard = Collection.get(currPokemonCardId);
+        currPokemonCard = collection.get(currPokemonCardId);
     }
     /**
      * Size of collection getter
      * @return int the collection size
      */
     public int getSize() {
-        int size = Collection.size();
+        int size = collection.size();
         return size;
     }
     /**
@@ -78,7 +78,7 @@ public class Collection
      * @param id of the pokemon card
      */
     public void deletePokemonCard(int id) {
-        Collection.remove(id);
+        collection.remove(id);
     }
     /** 
      * Getter for the current pokemonCard instance
@@ -97,10 +97,10 @@ public class Collection
     public ArrayList findPokemonCard(String name) {
         // Search for pokemonCard
         ArrayList<Integer> searchResult = new ArrayList<Integer>(); 
-        for (int pokemonCardId : Collection.keySet()) {
-            if (Collection.get(pokemonCardId)
+        for (int pokemonCardId : collection.keySet()) {
+            if (collection.get(pokemonCardId)
                 .getName().toLowerCase().contains(name)) {
-                currPokemonCard = Collection.get(pokemonCardId);
+                currPokemonCard = collection.get(pokemonCardId);
                 searchResult.add(pokemonCardId);
             }
         }
@@ -116,10 +116,10 @@ public class Collection
         UI.clearGraphics();
         UI.println("----Pokemon----");
         // Traverse Map
-        for (int pokemonCardId : Collection.keySet()) {
+        for (int pokemonCardId : collection.keySet()) {
             UI.println(pokemonCardId + ") " 
-                        + Collection.get(pokemonCardId).getName());
-            UI.println("Value: $ " + Collection.get(pokemonCardId).getValue());
+                        + collection.get(pokemonCardId).getName());
+            UI.println("Value: $ " + collection.get(pokemonCardId).getValue());
             UI.println("");
         }
     }
@@ -130,8 +130,8 @@ public class Collection
         int locY = 20;  // y location
         int locX = 20;  // x location of first card
         int buffer = 10;    // gap inbetween cards
-        for (int pokemonCardId : Collection.keySet()) {
-            currPokemonCard = Collection.get(pokemonCardId);
+        for (int pokemonCardId : collection.keySet()) {
+            currPokemonCard = collection.get(pokemonCardId);
             currPokemonCard.displayImage(locX, locY);
             // move next image over with a buffer inbetween;
             locX += currPokemonCard.WIDTH + buffer;
@@ -145,8 +145,8 @@ public class Collection
      * @return boolean true if image is clicked on, false if not
      */
     public boolean imageClick (double x, double y) {
-        for (int pokemonCardId : Collection.keySet()) {
-            currPokemonCard = Collection.get(pokemonCardId);
+        for (int pokemonCardId : collection.keySet()) {
+            currPokemonCard = collection.get(pokemonCardId);
             // checks if click was on the image
             if (currPokemonCard.onProfile(x, y)) {    
                 return true;
