@@ -28,6 +28,7 @@ public class PokemonCard
     {
         name = nm;
         value = val;
+        // if there is no image set it to default image
         if (img == null) {
             this.image = DEFAULT_IMAGE;
         }
