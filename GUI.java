@@ -2,7 +2,7 @@ import java.util.HashMap;
 import ecs100.*;
 import java.util.ArrayList;
 /**
- * code of GUI
+ * class for interface
  *
  * @author AL
  * @version 26/05/22
