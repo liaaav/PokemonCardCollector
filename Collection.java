@@ -115,12 +115,14 @@ public class Collection
         UI.clearText();
         UI.clearGraphics();
         UI.println("----Pokemon----");
+        int i = 1;
         // Traverse Map
         for (int pokemonCardId : collection.keySet()) {
-            UI.println(pokemonCardId + ") " 
+            UI.println(i + ") " 
                         + collection.get(pokemonCardId).getName());
             UI.println("Value: $ " + collection.get(pokemonCardId).getValue());
             UI.println("");
+            i++;    // increment number
         }
     }
     /**
