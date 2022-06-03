@@ -203,6 +203,7 @@ public class GUI
         } while (!confirmation.equals("y") && !confirmation.equals("n"));
         
     }
+    
     /**
      * Display pokemon information
      */
@@ -213,6 +214,7 @@ public class GUI
         pokemonCard.displayImage(20, 20);  //Show image on canvas
         UI.setMouseListener(this::pokemonMouse);    // sets mouse listener
     }
+    
     /**
      * mouse settings when all pokemon are displayed
      * @param action of the mouse
@@ -228,6 +230,7 @@ public class GUI
             }
         }
     }
+    
     /**
      * mouse settings when 1 pokemon details are displayed
      * @param action of the mouse
@@ -241,6 +244,7 @@ public class GUI
             }
         }
     }
+    
     /**
      * default mouse settings
      * @param action of the mouse
@@ -249,6 +253,7 @@ public class GUI
      */
     public void defaultMouse(String action, double x, double y) {
     }
+    
     /**
      * clear all
      */
