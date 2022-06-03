@@ -9,10 +9,15 @@ import java.util.ArrayList;
  */
 public class Collection
 {
-    //declaring the hashmap
-    private HashMap<Integer, PokemonCard> collection;
-    // store the id of current pokemonCard
-    private int currPokemonCardId;
+    //declaring the array
+    /**
+     * Decided to use an arraylist rather than a hashmap because the keys of
+     * the hashmap were redundant. They were not unique to the value and were
+     * the same as if it were just an arraylist. Changing it to an arraylist 
+     * made it a lot easier when working with ids because removing ids would
+     * just change the other pokemons ids.
+     */
+    private ArrayList<PokemonCard> collection;
     // store the instance of the current pokemonCard
     private PokemonCard currPokemonCard;
     /**
@@ -21,7 +26,7 @@ public class Collection
     public Collection()
     {
         // initialise instance variables
-        collection = new HashMap<Integer, PokemonCard>();
+        collection = new ArrayList<PokemonCard>();
         
         // create Collection
         PokemonCard p1 = new PokemonCard("WOOPER", 0.34, "wooper.png");
@@ -29,26 +34,9 @@ public class Collection
         PokemonCard p3 = new PokemonCard
         ("GALARIAN PONYTA", 7.76, "galarianPonyta.png");
         
-        collection.put(1, p1);
-        collection.put(2, p2);
-        collection.put(3, p3);
-        
-        this.currPokemonCardId = 3;     //Stores the current id
-    }
-
-    /**
-     * increases id by one
-     */
-    public void idIncrement() {
-        this.currPokemonCardId += 1;
-    }  
-    
-    /**
-     * Sets current pokemon based on id passed in
-     * @param id hashmap id of the pokemon card
-     */
-    public void setPokemonCardId(int id) {
-        currPokemonCard = collection.get(id);
+        collection.add(p1);
+        collection.add(p2);
+        collection.add(p3);
     }
     
     /**
@@ -61,10 +49,12 @@ public class Collection
         // rounds value to 2dp
         double value = Math.round(val * 100.0) / 100.0;
         // puts card into hashmap
-        collection.put(currPokemonCardId, new PokemonCard(name, value, img));
+        collection.add(new PokemonCard(name, value, img));
         // sets current pokemon card to the one just added
-        currPokemonCard = collection.get(currPokemonCardId);
+        // minus one because id starts at 0
+        currPokemonCard = collection.get(collection.size() - 1);
     }
+    
     /**
      * Size of collection getter
      * @return int the collection size
@@ -97,11 +87,11 @@ public class Collection
     public ArrayList findPokemonCard(String name) {
         // Search for pokemonCard
         ArrayList<Integer> searchResult = new ArrayList<Integer>(); 
-        for (int pokemonCardId : collection.keySet()) {
-            if (collection.get(pokemonCardId)
+        for (int  id = 0; id < collection.size(); id++) {
+            if (collection.get(id)
                 .getName().toLowerCase().contains(name)) {
-                currPokemonCard = collection.get(pokemonCardId);
-                searchResult.add(pokemonCardId);
+                currPokemonCard = collection.get(id);
+                searchResult.add(id);
             }
         }
         return searchResult;
@@ -114,15 +104,18 @@ public class Collection
         // clears graphics and text
         UI.clearText();
         UI.clearGraphics();
-        UI.println("----Pokemon----");
-        int i = 1;
-        // Traverse Map
-        for (int pokemonCardId : collection.keySet()) {
-            UI.println(i + ") " 
-                        + collection.get(pokemonCardId).getName());
-            UI.println("Value: $ " + collection.get(pokemonCardId).getValue());
-            UI.println("");
-            i++;    // increment number
+        if (collection.size() < 1) {
+            UI.println("Please add some pokemon first");
+        }
+        else {
+            UI.println("----Pokemon----");
+            // Traverse Map
+            for (int  id = 0; id < collection.size(); id++) {
+                UI.println(id + 1 + ") " // id + 1 to make list start from 1
+                            + collection.get(id).getName());
+                UI.println("Value: $ " + collection.get(id).getValue());
+                UI.println("");
+            }
         }
     }
     /**
@@ -132,8 +125,8 @@ public class Collection
         int locY = 20;  // y location
         int locX = 20;  // x location of first card
         int buffer = 10;    // gap inbetween cards
-        for (int pokemonCardId : collection.keySet()) {
-            currPokemonCard = collection.get(pokemonCardId);
+        for (int  id = 0; id < collection.size(); id++) {
+            currPokemonCard = collection.get(id);
             currPokemonCard.displayImage(locX, locY);
             // move next image over with a buffer inbetween;
             locX += currPokemonCard.WIDTH + buffer;
@@ -147,8 +140,8 @@ public class Collection
      * @return boolean true if image is clicked on, false if not
      */
     public boolean imageClick (double x, double y) {
-        for (int pokemonCardId : collection.keySet()) {
-            currPokemonCard = collection.get(pokemonCardId);
+        for (int  id = 0; id < collection.size(); id++) {
+            currPokemonCard = collection.get(id);
             // checks if click was on the image
             if (currPokemonCard.onProfile(x, y)) {    
                 return true;
